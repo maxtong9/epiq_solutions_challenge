@@ -6,4 +6,4 @@
 ## System Requirements
 * Ubuntu 22.04.1 LTS
 ## Dependencies
-* g++ ``` sudo apt-get install g++ ```
+* g++ 11.3.0 ``` sudo apt-get install g++ ```
