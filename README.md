@@ -3,5 +3,7 @@
 ### This is a platform temperature monitor for Epiq Solution's coding challenge
 
 
-## Requirements
-* g++
+## System Requirements
+* Ubuntu 22.04.1 LTS
+## Dependencies
+* g++ ``` sudo apt-get install g++ ```
