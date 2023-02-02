@@ -1,7 +1,7 @@
 #pragma once
-#include <vector>
+#include <set>
 #include <cstdint>
-
+#include <mutex>
 
 namespace PTM
 {
@@ -29,8 +29,16 @@ public:
     /**
      * @brief Register a new temperature sensor to monitor
      * @param sensor_id ID of the sensor to monitor
+     * @return true if sensor successfully registerd, false otherwise
      */
-    void register_temp_sensor(uint8_t sensor_id);
+    bool register_temp_sensor(uint8_t sensor_id);
+
+    /**
+     * @brief Unregister a temperature sensor to monitor
+     * @param sensor_id ID of the sensor to deregister
+     * @return true if sensor successfully deregisterd, false otherwise
+     */
+    bool unregister_temp_sensor(uint8_t sensor_id);
 
     /**
      * @brief Run the temperature monitor (blocking)
@@ -43,11 +51,19 @@ public:
      */
     void set_polling_time_interval(uint32_t new_polling_time_interval_ms);
 
+    /**
+     * @brief Read the temperature of the requested temp sensor
+     * @param temp_sensor_id the number of the sensor to read (1-4)
+     * @param p_temp_in_degrees_c a pointer to a float where the temperature shall be written in degrees celsius
+     * @return int32_t indicating status (0=success, anything else indicates an error code
+     */
+    int32_t PTM_read_temp(uint8_t temp_sensor_id, float* p_temp_in_degrees_c);
+
 protected:
     /**
      * Holds the temperature sensor IDs
      */ 
-    std::vector<uint8_t> temp_sensor_ids{};
+    std::set<uint8_t> temp_sensor_ids{};
 
     /**
      * Time between each temperature read on the sensors
@@ -63,6 +79,11 @@ protected:
      * Maximum acceptable temperature
      */ 
     float max_temp_deg_c;
+
+    /**
+     * Protects modifying the sensor IDs from within the main thread while polling
+     */ 
+    std::mutex sensor_ids_mtx;
 
     /**
      * @brief Verify the temperature is in range
