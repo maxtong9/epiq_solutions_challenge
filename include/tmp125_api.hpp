@@ -3,17 +3,16 @@
 #include <random>
 #include <string>
 
-
 namespace tmp125_api
 {
 /**
  * @brief Minimum value for the random distribution
  */
-constexpr int MIN_DIST = -42;
+constexpr int MIN_DIST = -42; // tests values slightly out of range
 /**
  * @brief Maximum value for the random distribution
  */
-constexpr int MAX_DIST = 89;
+constexpr int MAX_DIST = 95; // tests values slightly out of range
 /**
  * @brief Total number of error codes utilized by the API
  */
@@ -39,7 +38,6 @@ inline float generate_random_temperature_value()
     return static_cast<float>(temp_distribution(random_engine));
 }
 
-
 /**
  * @brief Read the temperature of the requested temperature sensor_id
  * @param temp_sensor_id the id of the temp sensor to read (1-4)
@@ -53,7 +51,7 @@ inline int32_t tmp125_read_temp(uint8_t temp_sensor_id, float* p_temp_in_degrees
     {
         return 1;
     }
-
+    
     // Simulate reading the temperature sensor
     *p_temp_in_degrees_c = generate_random_temperature_value();
 
