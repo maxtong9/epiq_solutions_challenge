@@ -46,15 +46,17 @@ void PlatformTemperatureMonitor::runTemperatureMonitor()
                     std::string str_current_time{char_str_current_time};
                     str_current_time.pop_back(); // Removes unecessary newline
                     
+                    std::stringstream error_msg;
                     // Report Error
-                    std::cerr << str_current_time << " "; // TODO: cout is thread safe but not the << operator. 
-                    std::cerr << "Error: ";
+                    error_msg << str_current_time << " "; 
+                    error_msg << "Error: ";
                     try{
-                        std::cerr << tmp125_api::error_code_to_str.at(error_code) << std::endl;
+                        error_msg << tmp125_api::error_code_to_str.at(error_code) << std::endl;
                     } catch (std::out_of_range) 
                     {
-                        std::cerr << "Error encountered while trying to read temperature data. Undefined error code reported. " << std::endl;
+                        error_msg << "Error encountered while trying to read temperature data. Undefined error code reported. " << std::endl;
                     }
+                    std::cerr << error_msg.str();
                     // Assumption here is to stop running the temperature monitor if bad error code is encountered.
                     return;
                 }

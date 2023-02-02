@@ -2,7 +2,7 @@
 #include <iostream>
 #include <random>
 #include <string>
-
+#include <array>
 namespace tmp125_api
 {
 /**
