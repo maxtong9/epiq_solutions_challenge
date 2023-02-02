@@ -8,3 +8,7 @@
 
 ## Dependencies
 * g++ 11.3.0 ``` sudo apt-get install g++ ```
+
+## Build Instructions
+From the root directory (platform_temperature_monitor)
+* ```make all``` Compiles the source code to output the executable: challenge_1
