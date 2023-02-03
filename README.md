@@ -9,7 +9,7 @@
 ## Dependencies
 * g++ v11.3.0 ``` sudo apt-get install g++ ```
 * cmake v3.22.1 ``` sudo apt-get install cmake ```
-* gtest - gtest artifacts are automatically fetched through CMake. Requires active internet connection and ability to connect to https://github.com.
+* gtest - gtest artifacts are automatically fetched through CMake. Requires active internet connection and ability to connect to https://github.com/google/googletest.git.
 
 ## Build Instructions
 From the root directory (platform_temperature_monitor/)
