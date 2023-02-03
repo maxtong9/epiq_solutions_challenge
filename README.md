@@ -15,4 +15,7 @@
 From the root directory (platform_temperature_monitor/)
 1. Run ```cmake -B build```
     This sets up a build directory and creates a Makefile to use.
-2. Run ```cmake --build build
+2. Run ```cmake --build build `` This compiles the source code. The artifacts that it creates are:
+    * build/bin/ptm_driver - This is the main executable that satisfies the requirements for challenge #1.
+    * build/lib/libptm_lib.so - This is the linux C++ Shared library for the PTM API.
+    * build/bin/ptm_unit_test - This is the unit test file for the PlatformTemperatureMonitor class.
