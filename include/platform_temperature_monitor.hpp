@@ -59,6 +59,14 @@ public:
      */
     int32_t PTM_read_temp(uint8_t temp_sensor_id, float* p_temp_in_degrees_c);
 
+    /**
+     * @brief Verify the temperature is in range
+     * @param sensor_id ID of the sensor that reported the temperature
+     * @param reported_temp_deg_c Reported temperature in celcius
+     * @return true if temperature is in range, false otherwise 
+     */
+    bool verify_temp_in_range(uint8_t sensor_id, float reported_temp_deg_c);
+
 protected:
     /**
      * Holds the temperature sensor IDs
@@ -84,14 +92,6 @@ protected:
      * Protects modifying the sensor IDs from within the main thread while polling
      */ 
     std::mutex sensor_ids_mtx;
-
-    /**
-     * @brief Verify the temperature is in range
-     * @param sensor_id ID of the sensor that reported the temperature
-     * @param reported_temp_deg_c Reported temperature in celcius
-     * @return true if temperature is in range, false otherwise 
-     */
-    bool verify_temp_in_range(uint8_t sensor_id, float reported_temp_deg_c);
 
 };
 } //namespace PTM

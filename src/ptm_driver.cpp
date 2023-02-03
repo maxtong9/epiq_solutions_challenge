@@ -1,4 +1,4 @@
-#include "../include/platform_temperature_monitor.hpp"
+#include "platform_temperature_monitor.hpp"
 using namespace PTM;
 
 /**

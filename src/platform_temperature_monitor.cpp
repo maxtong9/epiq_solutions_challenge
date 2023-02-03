@@ -5,8 +5,8 @@
 #include <thread>
 #include <ctime>
 #include <string>
-#include "../include/tmp125_api.hpp"
-#include "../include/platform_temperature_monitor.hpp"
+#include "tmp125_api.hpp"
+#include "platform_temperature_monitor.hpp"
 
 using namespace tmp125_api;
 
@@ -52,7 +52,7 @@ void PlatformTemperatureMonitor::runTemperatureMonitor()
                     error_msg << "Error: ";
                     try{
                         error_msg << tmp125_api::error_code_to_str.at(error_code) << std::endl;
-                    } catch (std::out_of_range) 
+                    } catch (std::out_of_range const&) 
                     {
                         error_msg << "Error encountered while trying to read temperature data. Undefined error code reported. " << std::endl;
                     }
