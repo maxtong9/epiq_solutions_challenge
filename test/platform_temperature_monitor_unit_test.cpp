@@ -79,10 +79,20 @@ TEST(PTM, PTM_read_temp)
     sensor_id = 100;
     test_read = 50;
     ASSERT_EQ(ptm.PTM_read_temp(sensor_id, &test_read), 1);
-
     // Assert float value did not change since Err Code 1
     ASSERT_EQ(test_read, 50);
 
+    // Error Code 1
+    sensor_id = 0;
+    test_read = 50;
+    ASSERT_EQ(ptm.PTM_read_temp(sensor_id, &test_read), 1);
+    // Assert float value did not change since Err Code 1
+    ASSERT_EQ(test_read, 50);
+
+
+    // Test Static call & Error Code 0
+    sensor_id = 4;
+    ASSERT_EQ(PTM::PlatformTemperatureMonitor::PTM_read_temp(sensor_id, &test_read), 0);
 
     
 
