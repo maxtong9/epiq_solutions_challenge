@@ -57,7 +57,7 @@ public:
      * @param p_temp_in_degrees_c a pointer to a float where the temperature shall be written in degrees celsius
      * @return int32_t indicating status (0=success, anything else indicates an error code
      */
-    int32_t PTM_read_temp(uint8_t temp_sensor_id, float* p_temp_in_degrees_c);
+    static int32_t PTM_read_temp(uint8_t temp_sensor_id, float* p_temp_in_degrees_c);
 
     /**
      * @brief Verify the temperature is in range
