@@ -88,7 +88,7 @@ int main()
     std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 
     // Change frequency to 500 ms
-    std::cout << "Main thread: Change rate of polling to every 1000 ms" << std::endl;
+    std::cout << "Main thread: Change rate of polling to every 500 ms" << std::endl;
     p1.set_polling_time_interval(500);
 
     // Wait 10 seconds 
