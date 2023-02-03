@@ -24,7 +24,9 @@ link_directories( ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} )
 add_executable(ptm_driver src/ptm_driver.cpp)
 target_link_libraries(ptm_driver ${PROJECT_LINK_LIBS} )
 
+enable_testing()
 
+add_subdirectory(test)
 # MESSAGE("${CMAKE_BINARY_DIR}") BUILD/
 # MESSAGE("${CMAKE_HOME_DIRECTORY}") - PTM DIR
 # MESSAGE("${CMAKE_SOURCE_DIR}") - PTM DIR
