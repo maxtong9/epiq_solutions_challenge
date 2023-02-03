@@ -93,7 +93,4 @@ TEST(PTM, PTM_read_temp)
     // Test Static call & Error Code 0
     sensor_id = 4;
     ASSERT_EQ(PTM::PlatformTemperatureMonitor::PTM_read_temp(sensor_id, &test_read), 0);
-
-    
-
 }

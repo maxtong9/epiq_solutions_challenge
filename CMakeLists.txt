@@ -7,8 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-Wall")
 
 # Output paths for build artifacts
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin) # executables
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib) # shared libraries
 
 include_directories(include)
 
@@ -23,6 +23,9 @@ link_directories( ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} )
 
 add_executable(ptm_driver src/ptm_driver.cpp)
 target_link_libraries(ptm_driver ${PROJECT_LINK_LIBS} )
+
+add_executable(ptm_multi_threaded examples/background_temp_monitor.cpp)
+target_link_libraries(ptm_multi_threaded ${PROJECT_LINK_LIBS})
 
 enable_testing()
 
