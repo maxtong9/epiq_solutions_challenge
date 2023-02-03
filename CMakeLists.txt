@@ -29,6 +29,7 @@ target_link_libraries(ptm_multi_threaded ${PROJECT_LINK_LIBS})
 
 enable_testing()
 
+add_subdirectory(tmp125_driver)
 add_subdirectory(test)
 # MESSAGE("${CMAKE_BINARY_DIR}") BUILD/
 # MESSAGE("${CMAKE_HOME_DIRECTORY}") - PTM DIR
