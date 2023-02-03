@@ -9,14 +9,10 @@
 ## Dependencies
 * g++ v11.3.0 ``` sudo apt-get install g++ ```
 * cmake v3.22.1 ``` sudo apt-get install cmake ```
-* gtest ``` sudo apt-get install libgtest-dev ```
-    1.  ```cd /usr/src/gtest ```
-    2.  ```sudo cmake CMakeLists.txt```
-    3.  ```sudo make ```
- 
-# copy or symlink libgtest.a and libgtest_main.a to your /usr/lib folder
-sudo cp *.a /usr/lib
+* gtest - gtest artifacts are automatically fetched through CMake. Requires active internet connection and ability to connect to https://github.com.
 
 ## Build Instructions
-From the root directory (platform_temperature_monitor)
-* ```make all``` Compiles the source code to output the executable: challenge_1
+From the root directory (platform_temperature_monitor/)
+1. Run ```cmake -B build```
+    This sets up a build directory and creates a Makefile to use.
+2. Run ```cmake --build build
