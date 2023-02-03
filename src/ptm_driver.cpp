@@ -2,7 +2,7 @@
 using namespace PTM;
 
 /**
- * @brief Main driver for the PTM Solution utilizing Epiq Solution's challenge criteria
+ * @brief Simple driver for the PTM Solution utilizing Epiq Solution's challenge criteria
  */
 int main()
 {
