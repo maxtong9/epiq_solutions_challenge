@@ -1,9 +1,71 @@
 #include <gtest/gtest.h>
 #include <iostream>
 #include "platform_temperature_monitor.hpp"
-TEST(test1, testname)
+
+TEST(PTM, register_temp_sensor)
 {
     PTM::PlatformTemperatureMonitor ptm(-100, 100);
-    std::cout << "Hello, World" << std::endl;
-    ASSERT_EQ(1, 2);
+
+    uint8_t test = (unsigned int)129;
+
+    // Register some sensor IDs
+    ASSERT_TRUE(ptm.register_temp_sensor(0));
+    ASSERT_TRUE(ptm.register_temp_sensor(1));
+    ASSERT_TRUE(ptm.register_temp_sensor(25));
+    ASSERT_TRUE(ptm.register_temp_sensor(2));
+    ASSERT_TRUE(ptm.register_temp_sensor(100));
+
+    // Check that duplicates are rejected
+    ASSERT_FALSE(ptm.register_temp_sensor(1));
+    ASSERT_FALSE(ptm.register_temp_sensor(100));
+}
+
+TEST(PTM, unregister_temp_sensor)
+{
+    PTM::PlatformTemperatureMonitor ptm(-100, 100);
+
+    uint8_t test = (unsigned int)129;
+
+    std::cout << int(test) << std::endl;
+    // Register sensor IDs
+    ASSERT_TRUE(ptm.register_temp_sensor(0));
+    ASSERT_TRUE(ptm.register_temp_sensor(1));
+    ASSERT_TRUE(ptm.register_temp_sensor(25));
+    ASSERT_TRUE(ptm.register_temp_sensor(2));
+
+    // Deregister Sensor IDs
+    ASSERT_TRUE(ptm.unregister_temp_sensor(0));
+    ASSERT_TRUE(ptm.unregister_temp_sensor(1));
+    ASSERT_TRUE(ptm.unregister_temp_sensor(25));
+    ASSERT_TRUE(ptm.unregister_temp_sensor(2));
+
+    // Check that values were deregistered and returns false if it doesn't exist
+    ASSERT_FALSE(ptm.unregister_temp_sensor(0));
+    ASSERT_FALSE(ptm.unregister_temp_sensor(1));
+    ASSERT_FALSE(ptm.unregister_temp_sensor(25));
+    ASSERT_FALSE(ptm.unregister_temp_sensor(2));
+    ASSERT_FALSE(ptm.unregister_temp_sensor(100));
+}
+
+TEST(PTM, verify_temp_in_range)
+{
+    PTM::PlatformTemperatureMonitor ptm(-100, 100);
+
+    uint8_t sensor_id = 100;
+
+    // Verify valid temperatures
+    ASSERT_TRUE(ptm.verify_temp_in_range(100, -100));
+    ASSERT_TRUE(ptm.verify_temp_in_range(100, -50));
+    ASSERT_TRUE(ptm.verify_temp_in_range(100, -0));
+    ASSERT_TRUE(ptm.verify_temp_in_range(100, 50));
+    ASSERT_TRUE(ptm.verify_temp_in_range(100, 100));
+
+    // Verify invalid temperatures
+    ASSERT_FALSE(ptm.verify_temp_in_range(100, -101));
+    ASSERT_FALSE(ptm.verify_temp_in_range(100, -500));
+    ASSERT_FALSE(ptm.verify_temp_in_range(100, 101));
+    ASSERT_FALSE(ptm.verify_temp_in_range(100, 500));
+
+
+
 }
