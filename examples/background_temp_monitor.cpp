@@ -1,6 +1,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <sstream>
 #include "platform_temperature_monitor.hpp"
 
 using namespace PTM;
@@ -50,6 +51,24 @@ int main()
     // Sleep for 5 seconds
     std::cout << "Main thread: Sleep for 5 seconds" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+
+    // Asynchronously read temperatures of various sensors
+    // while the PTM is on another thread
+    for(int i = 0; i < 100; i++)
+    {
+        float temp_value;
+        uint8_t sensor_id = (i % 4) + 1;
+
+        if (p1.PTM_read_temp(sensor_id, &temp_value) == 0)
+        {
+            std::stringstream read_results;
+            read_results << "Main thread: " << "Sensor: " << (unsigned int)sensor_id << ", temp: " << temp_value << std::endl;
+            std::cout << read_results.str();
+        }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+    }
 
     // Change frequency to 1000 ms
     std::cout << "Main thread: Change rate of polling to every 1000 ms" << std::endl;
