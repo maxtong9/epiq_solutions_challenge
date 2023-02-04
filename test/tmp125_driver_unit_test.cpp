@@ -15,11 +15,15 @@ TEST(TMP125_driver, tmp125_init)
 TEST(TMP125_driver, tmp125_read_temp)
 {
     Tmp125Driver tmp125;
+    
+    // Valid and invalid IDs to test
     std::array<uint8_t, 4> valid_ids{1, 2, 3, 4};
     std::array<uint8_t, 4> invalid_ids{86, 0, 5, 100};
+    
+    // Since there isn't any valid data to check, this will be passed in but not used
     float dummy_float_val;
 
-    // Test error codes before initialization
+    // Test error code 2 (Trying to run before initialization)
     ASSERT_EQ(tmp125.tmp125_read_temp(valid_ids[0], &dummy_float_val), 2);
     ASSERT_EQ(tmp125.tmp125_read_temp(invalid_ids[0], &dummy_float_val), 2);
 
@@ -28,11 +32,10 @@ TEST(TMP125_driver, tmp125_read_temp)
     // Test valid IDs
     for (uint8_t id : valid_ids)
     {
-        
         ASSERT_EQ(tmp125.tmp125_read_temp(id, &dummy_float_val), 0);
     }
     
-    // Test invalid IDs
+    // Test invalid IDs (Error code 1)
     for (uint8_t id : invalid_ids)
     {
         float dummy_float_val;
@@ -52,6 +55,7 @@ TEST(TMP125_driver, data_word_to_temperature)
     uint32_t data_word_neg_f25 = 0b111111111100000;
     uint32_t data_word_neg_55 = 0b110010010000000;
 
+    // Test data_word bits to temperature_deg_c conversion
     ASSERT_EQ(tmp125.data_word_to_temperature(data_word_127), 127);
     ASSERT_EQ(tmp125.data_word_to_temperature(data_word_75), 75);
     ASSERT_EQ(tmp125.data_word_to_temperature(data_word_f25), 0.25);

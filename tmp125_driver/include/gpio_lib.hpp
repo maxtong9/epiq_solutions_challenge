@@ -3,6 +3,7 @@ Description: Provides a mock up of an API to control GPIO pins from Linux
 userspace for the TPM coding challenge
 Author: John Doe, Epiq Solutions
 */
+# pragma once
 /* Includes */
 #include <stdio.h>
 #include <stdint.h>
@@ -11,8 +12,8 @@ Author: John Doe, Epiq Solutions
 #define NUM_PINS_PER_PORT 8 /* each GPIO port has 8-bits, represented as 0-7 */
 #define DIR_OUTPUT 0 /* set dir to 0 for output */
 #define DIR_INPUT 1 /* set dir to 1 for input */
-#define LOGICAL_HIGH 1
-#define LOGICAL_LOW 0
+#define LOGICAL_HIGH 1 // Added for this challenge
+#define LOGICAL_LOW 0 // Added for this challenge
 /* Local Variables */
 /* For this mock up library, the pin values and direction are stored in simple arrays
 * static to this file */

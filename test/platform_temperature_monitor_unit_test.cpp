@@ -37,7 +37,7 @@ TEST(PTM, unregister_temp_sensor)
     ASSERT_TRUE(ptm.unregister_temp_sensor(25));
     ASSERT_TRUE(ptm.unregister_temp_sensor(2));
 
-    // Check that values were deregistered and returns false if it doesn't exist
+    // Check that values were deregistered and returns false if they doesn't exist
     ASSERT_FALSE(ptm.unregister_temp_sensor(0));
     ASSERT_FALSE(ptm.unregister_temp_sensor(1));
     ASSERT_FALSE(ptm.unregister_temp_sensor(25));

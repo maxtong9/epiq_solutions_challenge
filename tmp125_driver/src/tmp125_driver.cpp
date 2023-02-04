@@ -7,7 +7,7 @@ namespace tmp125{
 int32_t Tmp125Driver::tmp125_init(void)
 {
     /* 
-    NOTE: Unfinished - I understand I need to check the error code for all of the gpio lib functions,
+    NOTE: Unfinished because I understand I need to check the error code for all of the gpio lib functions,
     however I'm deprioritizing it for this challenge to focus instead on other aspects of the implementation. 
     Plus it hopefully will be cleaner code for you all!
     */
@@ -52,8 +52,8 @@ int32_t Tmp125Driver::tmp125_read_temp(uint8_t temp_sensor_id, float *p_temp_in_
 
     // SPI Read
     // Force clock to start at HIGH
-    // Put CS low for sensor we want to read from to start the read
     gpio_write_pin(constants::TMP125_PORT, constants::SCK_PIN, LOGICAL_HIGH);
+    // Put CS low for sensor we want to read from to start the read
     gpio_write_pin(constants::TMP125_PORT, temp_sensor_id + constants::CS_PIN_ID_OFFSET, LOGICAL_LOW);
 
     uint32_t data_word = 0;
@@ -98,16 +98,17 @@ float Tmp125Driver::data_word_to_temperature(uint32_t data_word)
     if (data_word >> constants::DATA_WORD_SIGN_BIT_LOCATION == 0x1)
     {
         is_negative = true;
+
         // Two's complement
         data_word |= constants::PRECEDING_ZEROS_MASK; // Makes preceding 0's now 1's
         data_word = ~data_word;
         data_word++;
     }
     
-    // Grab fraction
+    // Grab fraction by masking the bits
     uint8_t frac_multiplier = data_word & constants::DATA_WORD_FLOAT_MASK;
     
-    // Grab integer
+    // Grab integer by shifting away the float portion
     data_word >>= constants::DATA_WORD_NUM_FLOAT_VAL;
 
     // Calculate the floating point temperature

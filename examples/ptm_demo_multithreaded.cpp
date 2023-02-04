@@ -7,7 +7,8 @@
 using namespace PTM;
 
 /**
- * @brief Example of running the PTM in the background of a main application.
+ * @brief Example of using and running the PTM in the background of a main application.
+ * The main application also asynchronously calls the PTM_read_temp function
  */
 int main()
 {
@@ -53,7 +54,7 @@ int main()
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
     // Asynchronously read temperatures of various sensors
-    // while the PTM is on another thread
+    // while the PTM is running on another thread
     for(int i = 0; i < 100; i++)
     {
         float temp_value;

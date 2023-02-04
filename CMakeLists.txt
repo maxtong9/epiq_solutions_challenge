@@ -22,7 +22,7 @@ add_subdirectory(tmp125_driver)
 
 include_directories(${CMAKE_SOURCE_DIR}/platform_temperature_monitor/include ${CMAKE_SOURCE_DIR}/tmp125_driver/include) # There is definitely a better way to do this
 
-# Applications 
+# Example of code usage (demos) 
 add_subdirectory(examples)
 
 enable_testing()

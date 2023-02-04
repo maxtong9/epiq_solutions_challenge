@@ -1,3 +1,4 @@
+#pragma once
 namespace tmp125
 {
 namespace constants 
@@ -39,6 +40,7 @@ constexpr uint8_t MAX_SENSOR_ID = 4;
 
 /**
  * @brief Offset of the sensor ID to the chip select port it's hooked up to
+ * NOTE: This is a short cut / hacky way to map the sensor ID with the GPIO pins. It only works for purposes of this challenge
  */
 constexpr uint8_t CS_PIN_ID_OFFSET = 3;
 

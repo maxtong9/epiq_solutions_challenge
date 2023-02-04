@@ -1,6 +1,10 @@
 #include <iostream>
 #include "tmp125_driver.hpp"
 using namespace tmp125;
+
+/**
+ * @brief Simple demo for the TMP125 software driver. It reads from all four sensors
+ */
 int main()
 {
     // Create the driver object
