@@ -7,8 +7,8 @@ namespace tmp125{
 int32_t Tmp125Driver::tmp125_init(void)
 {
     /* 
-    NOTE: I understand I need to check the error code for all of the gpio lib functions,
-    however I'm short cutting it for this challenge to focus instead on the implementation. 
+    NOTE: Unfinished - I understand I need to check the error code for all of the gpio lib functions,
+    however I'm deprioritizing it for this challenge to focus instead on other aspects of the implementation. 
     Plus it hopefully will be cleaner code for you all!
     */
 

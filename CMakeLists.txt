@@ -10,30 +10,19 @@ set(CMAKE_CXX_FLAGS "-Wall -g")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin) # executables
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib) # shared libraries
 
-include_directories(include)
-
-set(SOURCES src/platform_temperature_monitor.cpp)
-
-add_library(ptm_lib SHARED ${SOURCES})
-target_include_directories(ptm_lib PUBLIC include)
-
-
-set (PROJECT_LINK_LIBS libptm_lib.so)
+# Add library output path to link directories 
 link_directories( ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} )
 
-add_executable(ptm_driver src/ptm_driver.cpp)
-target_link_libraries(ptm_driver ${PROJECT_LINK_LIBS} )
+# Platform Temperature Monitor Library
+add_subdirectory(platform_temperature_monitor)
 
-add_executable(ptm_multi_threaded examples/background_temp_monitor.cpp)
-target_link_libraries(ptm_multi_threaded ${PROJECT_LINK_LIBS})
-
+# TMP125 Software Driver Library
 add_subdirectory(tmp125_driver)
 
+include_directories(${CMAKE_SOURCE_DIR}/platform_temperature_monitor/include ${CMAKE_SOURCE_DIR}/tmp125_driver/include)
+# Applications 
+add_subdirectory(examples)
+
 enable_testing()
-
-
+# Unit Tests
 add_subdirectory(test)
-# MESSAGE("${CMAKE_BINARY_DIR}") BUILD/
-# MESSAGE("${CMAKE_HOME_DIRECTORY}") - PTM DIR
-# MESSAGE("${CMAKE_SOURCE_DIR}") - PTM DIR
-# MESSAGE("${CMAKE_INCLUDE_PATH}") - PTM DIR
