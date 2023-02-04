@@ -1,3 +1,8 @@
+/**
+ * @file tmp125_driver_demo.cpp
+ * @brief Simple demo of the tmp125 software driver
+ * @author Maxton Ginier
+ */
 #include <iostream>
 #include "tmp125_driver.hpp"
 using namespace tmp125;

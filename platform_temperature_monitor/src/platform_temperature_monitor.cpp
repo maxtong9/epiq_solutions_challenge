@@ -1,4 +1,8 @@
-
+/**
+ * @file platform_temperature_monitor.cpp
+ * @brief Implementation the PlatformTemperatureMonitor class
+ * @author Maxton Ginier
+ */
 #include <iostream>
 #include <sstream>
 #include <chrono>

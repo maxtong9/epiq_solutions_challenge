@@ -1,3 +1,8 @@
+/**
+ * @file platform_temperature_monitor_unit_test.cpp
+ * @brief Unit tests for the PlatformTemperatureMonitor class
+ * @author Maxton Ginier
+ */
 #include <gtest/gtest.h>
 #include <iostream>
 #include "platform_temperature_monitor.hpp"

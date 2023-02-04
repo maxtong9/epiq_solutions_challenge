@@ -1,3 +1,8 @@
+/**
+ * @file tmp125_driver.cpp
+ * @brief Implementation of the Tmp125Driver class
+ * @author Maxton Ginier
+ */
 #include <iostream>
 #include "tmp125_driver.hpp"
 #include "gpio_lib.hpp"

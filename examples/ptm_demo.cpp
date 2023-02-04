@@ -1,3 +1,8 @@
+/**
+ * @file ptm_demo.cpp
+ * @brief Simple demo that runs the PTM application in a main thread
+ * @author Maxton Ginier
+ */
 #include "platform_temperature_monitor.hpp"
 using namespace PTM;
 

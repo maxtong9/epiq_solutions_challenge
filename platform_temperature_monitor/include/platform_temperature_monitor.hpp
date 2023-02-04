@@ -1,3 +1,8 @@
+/**
+ * @file platform_temperature_monitor.hpp
+ * @brief Definition of the PlatformTemperatureMonitor class
+ * @author Maxton Ginier
+ */
 #pragma once
 #include <set>
 #include <cstdint>

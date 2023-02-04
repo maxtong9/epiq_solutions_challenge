@@ -1,3 +1,9 @@
+/**
+ * @file tmp125_api.hpp
+ * @brief Simulated API for the TMP125 sensor. 
+ * Generates random numbers to "read" the temperature data
+ * @author Maxton Ginier
+ */
 #pragma once
 #include <iostream>
 #include <random>

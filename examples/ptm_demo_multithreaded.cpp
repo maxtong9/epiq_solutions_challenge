@@ -1,3 +1,8 @@
+/**
+ * @file ptm_demo_multithreaded.cpp
+ * @brief Multithreaded demo of the PTM running alongside of a main application
+ * @author Maxton Ginier
+ */
 #include <thread>
 #include <chrono>
 #include <iostream>

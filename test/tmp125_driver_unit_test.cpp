@@ -1,3 +1,8 @@
+/**
+ * @file tmp125_driver_unit_test.cpp
+ * @brief Unit tests for the Tmp125Driver class
+ * @author Maxton Ginier
+ */
 #include <gtest/gtest.h>
 #include "tmp125_driver.hpp"
 #include <array>

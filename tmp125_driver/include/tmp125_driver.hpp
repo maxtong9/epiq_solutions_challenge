@@ -1,3 +1,8 @@
+/**
+ * @file tmp125_driver.hpp
+ * @brief Definition of the Tmp125Driver class.
+ * @author Maxton Ginier
+ */
 #pragma once
 namespace tmp125
 {
