@@ -27,9 +27,11 @@ target_link_libraries(ptm_driver ${PROJECT_LINK_LIBS} )
 add_executable(ptm_multi_threaded examples/background_temp_monitor.cpp)
 target_link_libraries(ptm_multi_threaded ${PROJECT_LINK_LIBS})
 
+add_subdirectory(tmp125_driver)
+
 enable_testing()
 
-add_subdirectory(tmp125_driver)
+
 add_subdirectory(test)
 # MESSAGE("${CMAKE_BINARY_DIR}") BUILD/
 # MESSAGE("${CMAKE_HOME_DIRECTORY}") - PTM DIR

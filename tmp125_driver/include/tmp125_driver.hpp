@@ -1,7 +1,7 @@
-#include <vector>
-namespace tmp125{
-
-namespace constants {
+namespace tmp125
+{
+namespace constants 
+{
 // tmp125 Port number
 constexpr uint8_t TMP125_PORT = 0;
 
@@ -40,7 +40,7 @@ public:
     */
     int32_t tmp125_read_temp(uint8_t temp_sensor_id, float* p_temp_in_degrees_c);
 
-    float data_word_to_temp(std::vector<uint8_t>& data_word);
+    float data_word_to_temperature(uint32_t data_word);
 
 protected:
     bool initialized = false;

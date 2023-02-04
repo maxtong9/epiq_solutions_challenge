@@ -6,6 +6,12 @@ namespace tmp125{
 
 int32_t Tmp125Driver::tmp125_init(void)
 {
+    /* 
+    NOTE: I understand I need to check the error code for all of the gpio lib functions,
+    however I'm short cutting it for this challenge to focus instead on the implementation. 
+    Plus it hopefully will be cleaner code for you all!
+    */
+
     /* Set pin starting states */
     gpio_write_pin(constants::TMP125_PORT, constants::UNUSED_PIN, LOGICAL_LOW); // Unused
     gpio_write_pin(constants::TMP125_PORT, constants::SI_PIN, LOGICAL_LOW);     // Not used for this coding challenge
@@ -44,20 +50,19 @@ int32_t Tmp125Driver::tmp125_read_temp(uint8_t temp_sensor_id, float *p_temp_in_
         return 1;
     }
 
-    /* SPI READ */
+    // SPI Read
     // Force clock to start at HIGH
     // Put CS low for sensor we want to read from to start the read
     gpio_write_pin(constants::TMP125_PORT, constants::SCK_PIN, LOGICAL_HIGH);
     gpio_write_pin(constants::TMP125_PORT, temp_sensor_id + 3, LOGICAL_LOW);
 
-    std::vector<uint8_t> data_word;
+    uint32_t data_word = 0;
     for (uint32_t i = 0; i < constants::DATA_WORD_SIZE_BITS; i++)
     {
         // Set clock LOW
         gpio_write_pin(constants::TMP125_PORT, constants::SCK_PIN, LOGICAL_LOW);
         
         // Potentially sleep for X ns
-
         
         // set clock HIGH
         gpio_write_pin(constants::TMP125_PORT, constants::SCK_PIN, LOGICAL_HIGH);
@@ -66,117 +71,50 @@ int32_t Tmp125Driver::tmp125_read_temp(uint8_t temp_sensor_id, float *p_temp_in_
         uint8_t pin_bit;
         gpio_read_pin(constants::TMP125_PORT, constants::SO_PIN, &pin_bit);
 
-        // Process/save the bit
-        data_word.push_back(pin_bit);
+        // Store the bit value
+        data_word <<= 1;
+        data_word |= pin_bit;
 
         // Potentially sleep for X ns
     } 
 
-    if (data_word.size() != constants::DATA_WORD_SIZE_BITS)
-    {
-        std::cerr << "Error: Data word received invalid" << std::endl;
-        return 3;
-    }
-    
+    // Reset the chip select
+    gpio_write_pin(constants::TMP125_PORT, temp_sensor_id + 3, LOGICAL_HIGH);
+
     // convert the bits in the data word to the temperature
-    *p_temp_in_degrees_c = data_word_to_temp(data_word);
+    *p_temp_in_degrees_c = data_word_to_temperature(data_word);
 
     return 0;
 }
 
-float Tmp125Driver::data_word_to_temp(std::vector<uint8_t>& data_word)
+float Tmp125Driver::data_word_to_temperature(uint32_t data_word)
 {
-    /*
-        My interpretation of the data word
-        Order: [0, (SIGN_BIT, MSB,...LSB), 0, 0, 0, 0, 0] 16 bits
-        - Ignore leading / trailing zeros
-        Calculating temp value:
-        - First bit is signs two's complement
-        - Next 7 bits are typical int conversion.
-        - Last 2 bits specify 0.25 decimal resolution.. It's not completely clear in the 
-          documentation but I believe it's as follows: 00 == .00, 01 = 0.25, 10 = 0.50, 11 = 0.75
-        - So according to the examples I would
-            1. Perform two's complement on the entire 10 bits if it's negative
-            2. Figure out the Int
-            3. Figure out the decimal portion
-            4. Add them together in a float
-            5. Make negative if Two's complement had to be performed
+    bool is_negative = false;
+    
+    // Get rid of trailing zeros
+    data_word >>= 5;
 
-    */
-   
-   // Holds the int portion of the data word
-   uint32_t data_word_int = 0;
-
-    // Holds the float portion of the data word
-   float data_word_float = 0;
-
-   // Lets us know at the end if we need to make the calculated value negative
-   bool is_negative = false;
-
-   // Remove trailing zeros
-   data_word.erase(data_word.begin());
-   data_word.pop_back();
-   data_word.pop_back();
-   data_word.pop_back();
-   data_word.pop_back();
-   data_word.pop_back();
-
-
-    // Check if the word is a negative value. If so, two's complement
-   if (data_word[0] == 1)
+    // Check sign bit
+    if (data_word >> 9 == 0x1)
     {
         is_negative = true;
-       
-        // Perform bitwise NOT
-        for (uint64_t i = 0; i < data_word.size(); i++)
-        {
-            data_word[i] = (data_word[i] ? 0 : 1);
-        }
-
-        // Add 1
-        for (int i = data_word.size() -1; i >= 0; i--)
-        {
-            if (data_word[i] == 1)
-            {
-                data_word[i] = 0;
-            } else
-            {
-                data_word[i] = 1;
-                break;
-            }
-        }
+        // Two's complement
+        data_word |= 0xFFFFFC00; // Makes preceding 0's now 1's
+        data_word = ~data_word;
+        data_word++;
     }
+    
+    // Grab fraction
+    uint8_t frac_multiplier = data_word & 0x3;
+    
+    // Grab integer
+    data_word >>=2;
 
-    // Calculate int
-    for (int i = 0; i < 8; i++)
-    {
-        data_word_int |= (data_word[i] << ((constants::DATA_WORD_INT_SIZE_BITS - 1) - i));
-    }
+    // Calculate the floating point temperature
+    float temperature_deg_c = (0.25 * frac_multiplier) + data_word;
 
-    // Calculate float
-    if (data_word[8] == 0 and data_word[9] == 0)
-    {
-        data_word_float = 0;
-    } else if (data_word[8] == 0 and data_word[9] == 1)
-    {
-        data_word_float = 0.25;
-    } else if (data_word[8] == 1 and data_word[9] == 0)
-    {
-        data_word_float = 0.50;
-    } else
-    {
-        data_word_float = 0.75;
-    }
-
-    // Add together
-    float temperature_deg_c = data_word_float + data_word_int;
-
-    if (is_negative)
-    {
-        temperature_deg_c *= -1;
-    }
-
-    return temperature_deg_c;
+    // Return negative if we had to handle the signed bit
+    return is_negative ? temperature_deg_c * -1 : temperature_deg_c;
 }
 
 } // namespace tmp_125

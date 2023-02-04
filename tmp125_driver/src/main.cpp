@@ -1,114 +1,31 @@
 #include <iostream>
 #include "tmp125_driver.hpp"
-#include <vector>
 using namespace tmp125;
 int main()
 {
-    std::cout << "Hello, World" << std::endl;
-
+    // Create the driver object
     Tmp125Driver driver;
+    const uint8_t NUM_SENSORS = 4;
 
-    std::vector<uint8_t> data_word_127{0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0}; // 127
-    float f = driver.data_word_to_temp(data_word_127);
-    std::cout << f << std::endl;
+    // Initialize the GPIO pins for TMP125 reading
+    driver.tmp125_init();
 
-    // std::vector<uint8_t> v127{0, 1, 1, 1, 1, 1, 1, 1}; // 127
-    // std::vector<uint8_t> v125{0, 1, 1, 1, 1, 1, 0, 1}; // 125
-    // std::vector<uint8_t> v25{0, 0, 0, 1, 1, 0, 0, 1}; // 25
-    // std::vector<uint8_t> v10{0, 0, 0, 0, 1, 0, 1, 0}; // 10
-    // std::vector<uint8_t> v0{0, 0, 0, 0, 0, 0, 0, 0}; // 0
-    // std::vector<uint8_t> vUK{1, 1, 1, 1, 1, 1, 1, 1, 1}; // 127
-    // std::vector<uint8_t> v_25{1, 1, 1, 0 ,0, 1, 1, 1}; // -25
-
+    // Read the temperature for all four sensors
+    for (uint8_t i = 1; i <= NUM_SENSORS; i++)
+    {
+        float temp_float_deg_c = 0.0;
+        driver.tmp125_read_temp(i, &temp_float_deg_c);
+        std::cout << "Sensor " << (uint32_t)i << " - temperature: " << temp_float_deg_c << " degrees celsius" << std::endl;
+    }
     
-    // int8_t temp_int = 0;
 
-    // if (v_25[0] == 1)
-    // {
-    //     // negative number - Not and add 1 to values
-    //     // NOT
-    //     for (int i = 0; i < v_25.size(); i++)
-    //     {
-    //         v_25[i] = (v_25[i] ? 0 : 1);
-    //     }
-    //     // Add 1
-    //     for (int i = v_25.size() -1; i >= 0; i--)
-    //     {
-    //         if (v_25[i] == 1)
-    //         {
-    //             v_25[i] = 0;
-    //         } else
-    //         {
-    //             v_25[i] = 1;
-    //             break;
-    //         }
-    //     }
+    /*
+    NOTE:
+    If I had more time I would have liked to add more use-cases here.
+    But ideally with proper data we would be able to use this in conjunction
+    with the PTM Library.
 
-    // }
-
-    // for (int i = 0; i < v127.size(); i++)
-    // {
-    //     temp_int |= (v127[i] << (8 - 1) - i);
-    // }
-    // std::cout << static_cast<int32_t>(temp_int) << std::endl;
-
-    // temp_int = 0;
-
-    // for (int i = 0; i < v125.size(); i++)
-    // {
-    //     temp_int |= (v125[i] << (8 - 1) - i);
-    // }
-    // std::cout << static_cast<int32_t>(temp_int) << std::endl;
-
-    // temp_int = 0;
-
-    // for (int i = 0; i < v25.size(); i++)
-    // {
-    //     temp_int |= (v25[i] << (8 - 1) - i);
-    // }
-    // std::cout << static_cast<int32_t>(temp_int) << std::endl;
-
-    // temp_int = 0;
-
-    // for (int i = 0; i < v10.size(); i++)
-    // {
-    //     temp_int |= (v10[i] << (8 - 1) - i);
-    // }
-    // std::cout << static_cast<int32_t>(temp_int) << std::endl;
-
-    // temp_int = 0;
-
-    // for (int i = 0; i < v0.size(); i++)
-    // {
-    //     temp_int |= (v0[i] << (8 - 1) - i);
-    // }
-    // std::cout << static_cast<int32_t>(temp_int) << std::endl;
-
-    // temp_int = 0;
-
-    // for (int i = 0; i < vUK.size(); i++)
-    // {
-    //     temp_int |= (vUK[i] << (8 - 1) - i);
-    // }
-    // std::cout << static_cast<int32_t>(temp_int) << std::endl;
-
-    // temp_int = 0;
-
-    // for (int i = 0; i < v_25.size(); i++)
-    // {
-    //     temp_int |= (v_25[i] << (8 - 1) - i);
-    // }
-    // std::cout << static_cast<int32_t>(temp_int) << std::endl;
-
-    // temp_int = 0;
-
-
-
-
-    // std::cout << "Last chance";
-
-
-
-
-
+    It's hard to test this class since we don't have actual hardware to test with 
+    */
+   
 }

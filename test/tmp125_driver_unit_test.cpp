@@ -40,30 +40,22 @@ TEST(TMP125_driver, tmp125_read_temp)
     }
 }
 
-TEST(TMP125_driver, data_word_to_temp)
+TEST(TMP125_driver, data_word_to_temperature)
 {
     Tmp125Driver tmp125;
-    // Bits sourced from the TMP 125 spec sheet
-    std::vector<uint8_t> data_word_127{0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0}; // 127
-    std::vector<uint8_t> data_word_125{0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0}; // 125
-    std::vector<uint8_t> data_word_25{0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0}; // 25
-    std::vector<uint8_t> data_word_10{0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}; // 10
-    std::vector<uint8_t> data_word_f25{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}; // 0.25
-    std::vector<uint8_t> data_word_0{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 0
-    std::vector<uint8_t> data_word_fneg25{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0}; // -0.25
-    std::vector<uint8_t> data_word_neg25{0, 1, 1, 1, 0 ,0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0}; // -25
 
-    ASSERT_EQ(tmp125.data_word_to_temp(data_word_127), 127);
-    ASSERT_EQ(tmp125.data_word_to_temp(data_word_125), 125);
-    ASSERT_EQ(tmp125.data_word_to_temp(data_word_25), 25);
-    ASSERT_EQ(tmp125.data_word_to_temp(data_word_10), 10);
-    ASSERT_EQ(tmp125.data_word_to_temp(data_word_f25), 0.25);
-    ASSERT_EQ(tmp125.data_word_to_temp(data_word_0), 0);
-    ASSERT_EQ(tmp125.data_word_to_temp(data_word_fneg25), -0.25);
-    ASSERT_EQ(tmp125.data_word_to_temp(data_word_neg25), -25);
+    // Values to test (source: TMP spec sheet)
+    uint32_t data_word_127 = 0b011111110000000;
+    uint32_t data_word_75 = 0b010010110000000;
+    uint32_t data_word_f25 = 0b000000000100000;
+    uint32_t data_word_0 = 0x0;
+    uint32_t data_word_neg_f25 = 0b111111111100000;
+    uint32_t data_word_neg_55 = 0b110010010000000;
 
-
-
-    
-    
+    ASSERT_EQ(tmp125.data_word_to_temperature(data_word_127), 127);
+    ASSERT_EQ(tmp125.data_word_to_temperature(data_word_75), 75);
+    ASSERT_EQ(tmp125.data_word_to_temperature(data_word_f25), 0.25);
+    ASSERT_EQ(tmp125.data_word_to_temperature(data_word_0), 0);
+    ASSERT_EQ(tmp125.data_word_to_temperature(data_word_neg_f25), -0.25);
+    ASSERT_EQ(tmp125.data_word_to_temperature(data_word_neg_55), -55);
 }
