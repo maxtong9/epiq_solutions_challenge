@@ -27,4 +27,4 @@ add_subdirectory(examples)
 
 enable_testing()
 # Unit Tests
-add_subdirectory(test)
+add_subdirectory(test EXCLUDE_FROM_ALL)

@@ -1,3 +1,4 @@
+project(test)
 include(FetchContent)
 
 # Pull gtest library from github
