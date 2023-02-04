@@ -4,7 +4,7 @@
  * @author Maxton Ginier
  */
 #pragma once
-#include <unistd.h>
+#include <stdint.h>
 namespace tmp125
 {
 namespace constants 

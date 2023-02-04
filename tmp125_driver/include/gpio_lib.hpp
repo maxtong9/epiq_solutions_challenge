@@ -24,7 +24,7 @@ static uint8_t gpio_port_dirs[NUM_PORTS];
 Parameters: dir=0 indicates output, dir=1 indicates input,
 Returns: int32_t indicating status (0=success, otherwise an error code)
 */
-int32_t gpio_set_direction(uint8_t port_id, uint8_t pin_id, uint8_t dir)
+inline int32_t gpio_set_direction(uint8_t port_id, uint8_t pin_id, uint8_t dir)
 {
 int32_t status=0;
 if (port_id >= NUM_PORTS)
@@ -65,7 +65,7 @@ Parameters: port_id is the ID of the GPIO port, pin_id is a value from 0-7, and
 pin_state=0 for a logic level low, pin_state=1 for logic level high.
 Returns: int32_t indicating status (0=success, otherwise an error code)
 */
-int32_t gpio_read_pin(uint8_t port_id, uint8_t pin_id, uint8_t* p_pin_state)
+inline int32_t gpio_read_pin(uint8_t port_id, uint8_t pin_id, uint8_t* p_pin_state)
 {
 int32_t status=0;
 if (port_id >= NUM_PORTS)
@@ -103,7 +103,7 @@ Parameters: port_id is the id of the GPIO port, pin_id is a value from 0-7, and
 pin_state=0 for a logic level low, pin_state=1 for logic level high.
 Returns: int32_t indicating status (0=success, otherwise an error code)
 */
-int32_t gpio_write_pin(uint8_t port_id, uint8_t pin_id, uint8_t pin_state)
+inline int32_t gpio_write_pin(uint8_t port_id, uint8_t pin_id, uint8_t pin_state)
 {
 int32_t status=0;
 if (port_id >= NUM_PORTS)
