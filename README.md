@@ -1,7 +1,6 @@
-# platform_temperature_monitor
+# Epiq Solutions Coding Challenge
 
-### This is a platform temperature monitor for Epiq Solution's coding challenge
-
+### This is a platform temperature monitor and a TMP125 software driver for Epiq Solution's coding challenge
 
 ## System Requirements
 * Ubuntu 22.04.1 LTS
@@ -12,8 +11,16 @@
 * git v2.34.2  ``` sudo apt-get install git ```
 * gtest - gtest artifacts are automatically fetched through CMake. Requires active internet connection and ability to connect to https://github.com/google/googletest.git.
 
+## Repository Overview
+Inside the epiq_solutions_challenge directory you'll find:
+* platform_temperature_monitor/ Contains source code for the PTM library
+* tmp125_driver/ Contains source code for the TMP125 software driver
+* test/ Contains unit tests for both of the libraries (Easier to compile them together for this challenge)
+* examples/ Contains the main demo or application scripts that showcase both libraries
+* build/ (After building) contains build/bin and build/lib, which hold our build artifacts
+
 ## Build Instructions
-From inside the root directory (platform_temperature_monitor/)
+From inside the root directory (epiq_solutions_challenge/)
 1. Run ```cmake -B build```
     This sets up a build directory and creates a Makefile to use.
 2. Run ```cmake --build build ``` This compiles the source code. The artifacts that it creates are:
@@ -25,14 +32,14 @@ From inside the root directory (platform_temperature_monitor/)
 3. Optional (Not necessary for this challenge) Install the ptm library to linux system wide: From the build directory run: ``` sudo make install ```
 
 ## Test Instructions
-From instide the build directory (platform_temperature_monitor/build)
+From instide the build directory (epiq_solutions_challenge/build)
 1. Run ``` cmake --build test ``` This fetches google test and builds are two unit tests. The output is:
     * build/bin/ptm_unit_test - Unit test for our PTM library
     * build/bin/tmp125_unit_test - Unit test for our TMP125 software driver
 2. Run ``` ctest ``` or ``` make test ``` to run the unit tests
 
 ## Running the code
-All executable files are located in platform_temperature_monitor/build/bin
+All executable files are located in epiq_solutions_challenge/build/bin
 * Example of running from the root directory ``` ./build/bin/ptm_demo ```
 * Executables available:
     1. ptm_demo (Challenge 1 requirements)
