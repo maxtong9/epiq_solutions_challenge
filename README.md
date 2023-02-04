@@ -14,7 +14,7 @@
 ## Repository Overview
 Inside the epiq_solutions_challenge directory you'll find:
 * platform_temperature_monitor/ Contains source code for the PTM library
-* tmp125_driver/ Contains source code for the TMP125 software driver
+* tmp125_driver/ Contains source code for the TMP125 software driver along with the SPI Interface
 * test/ Contains unit tests for both of the libraries (Easier to compile them together for this challenge)
 * examples/ Contains the main demo or application scripts that showcase both libraries
 * build/ (After building) contains build/bin and build/lib, which hold our build artifacts
@@ -45,5 +45,8 @@ All executable files are located in epiq_solutions_challenge/build/bin
     1. ptm_demo (Challenge 1 requirements)
     2. ptm_demo_multithreaded (Challenge 1 bonus requirements)
     3. tmp125_driver_demo (Challenge 2 requirements)
+
+
+#### author: Maxton Ginier (maxginier1@gmail.com)
 
     
