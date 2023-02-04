@@ -2,16 +2,22 @@ namespace tmp125
 {
 namespace constants 
 {
-
 /**
  * @brief GPIO port number the TMP125 sensor is connected to
  */
 constexpr uint8_t TMP125_PORT = 0;
 
 /**
- * @brief Number of bits expected to read in a valid data word
+ * @brief Data word constants
  */
 constexpr uint32_t DATA_WORD_SIZE_BITS = 16;
+constexpr uint32_t DATA_WORD_NUM_TRAILING_ZEROS = 5;
+constexpr uint32_t DATA_WORD_SIGN_BIT_LOCATION = 9;
+constexpr uint32_t DATA_WORD_FLOAT_MASK = 0x3;
+constexpr uint32_t DATA_WORD_NUM_FLOAT_VAL = 2;
+constexpr uint32_t PRECEDING_ZEROS_MASK = 0xFFFFFC00;
+constexpr float TEMP_DATA_RESOLUTION = 0.25;
+
 
 /**
  * @brief Mappings for the GPIO pins the TMP125 sensor is connected to
@@ -24,6 +30,18 @@ constexpr uint8_t CS1_PIN    = 4;
 constexpr uint8_t CS2_PIN    = 5;
 constexpr uint8_t CS3_PIN    = 6;
 constexpr uint8_t CS4_PIN    = 7;
+
+/**
+ * @brief Min / Max temperature sensor IDs
+ */
+constexpr uint8_t MIN_SENSOR_ID = 1;
+constexpr uint8_t MAX_SENSOR_ID = 4;
+
+/**
+ * @brief Offset of the sensor ID to the chip select port it's hooked up to
+ */
+constexpr uint8_t CS_PIN_ID_OFFSET = 3;
+
 } // namespace constants
 
 /**

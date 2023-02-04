@@ -44,7 +44,7 @@ int32_t Tmp125Driver::tmp125_read_temp(uint8_t temp_sensor_id, float *p_temp_in_
         return 2;
     }
 
-    if (temp_sensor_id > 4 or temp_sensor_id < 1)
+    if (temp_sensor_id > constants::MAX_SENSOR_ID or temp_sensor_id < constants::MIN_SENSOR_ID)
     {
         std::cerr << "Error: Invalid sensor ID: " << (unsigned int) temp_sensor_id << std::endl;
         return 1;
@@ -54,7 +54,7 @@ int32_t Tmp125Driver::tmp125_read_temp(uint8_t temp_sensor_id, float *p_temp_in_
     // Force clock to start at HIGH
     // Put CS low for sensor we want to read from to start the read
     gpio_write_pin(constants::TMP125_PORT, constants::SCK_PIN, LOGICAL_HIGH);
-    gpio_write_pin(constants::TMP125_PORT, temp_sensor_id + 3, LOGICAL_LOW);
+    gpio_write_pin(constants::TMP125_PORT, temp_sensor_id + constants::CS_PIN_ID_OFFSET, LOGICAL_LOW);
 
     uint32_t data_word = 0;
     for (uint32_t i = 0; i < constants::DATA_WORD_SIZE_BITS; i++)
@@ -79,7 +79,7 @@ int32_t Tmp125Driver::tmp125_read_temp(uint8_t temp_sensor_id, float *p_temp_in_
     } 
 
     // Reset the chip select
-    gpio_write_pin(constants::TMP125_PORT, temp_sensor_id + 3, LOGICAL_HIGH);
+    gpio_write_pin(constants::TMP125_PORT, temp_sensor_id + constants::CS_PIN_ID_OFFSET, LOGICAL_HIGH);
 
     // convert the bits in the data word to the temperature
     *p_temp_in_degrees_c = data_word_to_temperature(data_word);
@@ -92,26 +92,26 @@ float Tmp125Driver::data_word_to_temperature(uint32_t data_word)
     bool is_negative = false;
     
     // Get rid of trailing zeros
-    data_word >>= 5;
+    data_word >>= constants::DATA_WORD_NUM_TRAILING_ZEROS;
 
     // Check sign bit
-    if (data_word >> 9 == 0x1)
+    if (data_word >> constants::DATA_WORD_SIGN_BIT_LOCATION == 0x1)
     {
         is_negative = true;
         // Two's complement
-        data_word |= 0xFFFFFC00; // Makes preceding 0's now 1's
+        data_word |= constants::PRECEDING_ZEROS_MASK; // Makes preceding 0's now 1's
         data_word = ~data_word;
         data_word++;
     }
     
     // Grab fraction
-    uint8_t frac_multiplier = data_word & 0x3;
+    uint8_t frac_multiplier = data_word & constants::DATA_WORD_FLOAT_MASK;
     
     // Grab integer
-    data_word >>=2;
+    data_word >>= constants::DATA_WORD_NUM_FLOAT_VAL;
 
     // Calculate the floating point temperature
-    float temperature_deg_c = (0.25 * frac_multiplier) + data_word;
+    float temperature_deg_c = (constants::TEMP_DATA_RESOLUTION * frac_multiplier) + data_word;
 
     // Return negative if we had to handle the signed bit
     return is_negative ? temperature_deg_c * -1 : temperature_deg_c;
