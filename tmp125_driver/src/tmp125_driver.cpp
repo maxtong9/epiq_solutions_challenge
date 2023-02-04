@@ -9,7 +9,7 @@
 
 namespace tmp125{
 
-int32_t Tmp125Driver::tmp125_init(void)
+int32_t Tmp125Driver::tmp125_init(void) const
 {
     /* 
     NOTE: Unfinished because I understand I need to check the error code for all of the gpio lib functions,
@@ -41,7 +41,7 @@ int32_t Tmp125Driver::tmp125_init(void)
     return 0;
 }
 
-int32_t Tmp125Driver::tmp125_read_temp(uint8_t temp_sensor_id, float *p_temp_in_degrees_c)
+int32_t Tmp125Driver::tmp125_read_temp(uint8_t temp_sensor_id, float *p_temp_in_degrees_c) const
 {
     if (!initialized)
     {
@@ -92,7 +92,7 @@ int32_t Tmp125Driver::tmp125_read_temp(uint8_t temp_sensor_id, float *p_temp_in_
     return 0;
 }
 
-float Tmp125Driver::data_word_to_temperature(uint32_t data_word)
+float Tmp125Driver::data_word_to_temperature(uint32_t data_word) const
 {
     bool is_negative = false;
     

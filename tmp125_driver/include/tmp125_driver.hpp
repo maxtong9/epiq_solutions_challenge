@@ -4,6 +4,7 @@
  * @author Maxton Ginier
  */
 #pragma once
+#include <unistd.h>
 namespace tmp125
 {
 namespace constants 
@@ -61,26 +62,26 @@ public:
      * @brief Initializes the GPIO interface specific to the TMP125 sensor
      * @return int32_t indicating status of the init operation (0=success, anything else indicates error code)
      */
-    int32_t tmp125_init(void);
+    int32_t tmp125_init(void) const;
 
     /**
      * @brief Read the temperature of the requested temp sensor in degrees C
      * @param p_temp_in_degrees_c a pointer to a float where the temperature will be written
      * @return int32_t indicating status of the init operation (0=success, anything else indicates error code)
      */
-    int32_t tmp125_read_temp(uint8_t temp_sensor_id, float* p_temp_in_degrees_c);
+    int32_t tmp125_read_temp(uint8_t temp_sensor_id, float* p_temp_in_degrees_c) const;
 
     /**
      * @brief Converts the data word read from the sensor to the temperature in degrees C
      * @param data_word unsigned 32 bit data word containing the bits read from the sensor
      * @return float of the temperature in degrees C
      */
-    float data_word_to_temperature(uint32_t data_word);
+    float data_word_to_temperature(uint32_t data_word) const;
 
 protected:
     /**
      * @brief Set to true when the object is initialized, false otherwise
      */
-    bool initialized = false;
+    mutable bool initialized = false; 
 };
 } // namespace tmp_125
