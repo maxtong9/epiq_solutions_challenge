@@ -31,7 +31,7 @@ constexpr uint32_t DEFAULT_CLOCK_PERIOD_NS = 100;
 constexpr uint32_t DEFAULT_CLOCK_POLARITY = 0;
 
 /**
- * @brief Chip select delay (ns)
+ * @brief Default chip select delay (ns)
  */
 constexpr uint32_t DEFAULT_CHIP_SELECT_DELAY_NS = 100;
 

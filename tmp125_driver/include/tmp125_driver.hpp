@@ -5,6 +5,7 @@
  */
 #pragma once
 #include <stdint.h>
+#include "spi_interface.hpp"
 namespace tmp125
 {
 namespace constants 
@@ -13,6 +14,21 @@ namespace constants
  * @brief GPIO port number the TMP125 sensor is connected to
  */
 constexpr uint8_t TMP125_PORT = 0;
+
+/**
+ * @brief TMP125 Clock Polarity
+ */
+constexpr uint8_t CLOCK_POLARITY = 1;
+
+/**
+ * @brief TMP125 Clock Period (ns)
+ */
+constexpr uint32_t CLOCK_PERIOD_NS = 100;
+
+/**
+ * @brief Chip select delay (ns)
+ */
+constexpr uint32_t CHIP_SELECT_DELAY_NS = 30;
 
 /**
  * @brief Data word constants
@@ -24,19 +40,6 @@ constexpr uint32_t DATA_WORD_FLOAT_MASK = 0x3;
 constexpr uint32_t DATA_WORD_NUM_FLOAT_VAL = 2;
 constexpr uint32_t PRECEDING_ZEROS_MASK = 0xFFFFFC00;
 constexpr float TEMP_DATA_RESOLUTION = 0.25;
-
-
-/**
- * @brief Mappings for the GPIO pins the TMP125 sensor is connected to
- */
-constexpr uint8_t UNUSED_PIN = 0; // Assuming pin 0 is unused according to the diagram given
-constexpr uint8_t SI_PIN     = 1;
-constexpr uint8_t SO_PIN     = 2;
-constexpr uint8_t SCK_PIN    = 3;
-constexpr uint8_t CS1_PIN    = 4;
-constexpr uint8_t CS2_PIN    = 5;
-constexpr uint8_t CS3_PIN    = 6;
-constexpr uint8_t CS4_PIN    = 7;
 
 /**
  * @brief Min / Max temperature sensor IDs
@@ -57,7 +60,17 @@ constexpr uint8_t CS_PIN_ID_OFFSET = 3;
  */
 class Tmp125Driver
 {
-public:    
+public:
+    /**
+     * @brief Initializes the SPI interface for the TMP125 temperature sensor
+     */
+    Tmp125Driver();
+
+    /**
+     * @brief Destructor that deletes the memory for the SPI Interface
+     */
+    ~Tmp125Driver();
+
     /**
      * @brief Initializes the GPIO interface specific to the TMP125 sensor
      * @return int32_t indicating status of the init operation (0=success, anything else indicates error code)
@@ -83,5 +96,10 @@ protected:
      * @brief Set to true when the object is initialized, false otherwise
      */
     mutable bool initialized = false; 
+
+    /**
+     * @brief SPI Interface pointer used to connect to the physical GPIO pins
+     */
+    const SPI::SPIInterface* spi_interface; 
 };
 } // namespace tmp_125

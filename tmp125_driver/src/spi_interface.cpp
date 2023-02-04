@@ -50,10 +50,22 @@ int32_t SPIInterface::spi_init(void) const
 
 int32_t SPIInterface::spi_read_data_bits(uint32_t* data_word, uint32_t data_size, uint8_t chip_sel) const
 {
+    if (!initialized)
+    {
+        std::cerr << "Error: Please initialize the SPI Interface" << std::endl;
+        return 2;
+    }
+
     if (data_size > constants::MAX_DATA_WORD_SIZE_BITS)
     {
         std::cerr << "Error: Data size > " << constants::MAX_DATA_WORD_SIZE_BITS << " bits" << std::endl;
         return 1;
+    }
+
+    if (chip_sel > constants::CS4_PIN or chip_sel < constants::CS1_PIN)
+    {
+        std::cerr << "Error: Invalid chip select pin to read from" << std::endl;
+        return 3;
     }
 
     // Set the Chip Select for the device we want to read
