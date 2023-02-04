@@ -11,6 +11,8 @@ Author: John Doe, Epiq Solutions
 #define NUM_PINS_PER_PORT 8 /* each GPIO port has 8-bits, represented as 0-7 */
 #define DIR_OUTPUT 0 /* set dir to 0 for output */
 #define DIR_INPUT 1 /* set dir to 1 for input */
+#define LOGICAL_HIGH 1
+#define LOGICAL_LOW 0
 /* Local Variables */
 /* For this mock up library, the pin values and direction are stored in simple arrays
 * static to this file */

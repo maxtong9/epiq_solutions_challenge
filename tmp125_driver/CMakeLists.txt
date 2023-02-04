@@ -1,12 +1,11 @@
 project(tmp125_driver)
 
-
 include_directories(include)
 
 set(SOURCES src/tmp125_driver.cpp)
 
 add_library(tmp125_driver SHARED ${SOURCES})
-target_include_directories(ptm_lib PUBLIC include)
+target_include_directories(tmp125_driver PUBLIC include)
 
 
 set (PROJECT_LINK_LIBS libtmp125_driver.so)
