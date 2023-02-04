@@ -19,7 +19,7 @@ namespace PTM
 PlatformTemperatureMonitor::PlatformTemperatureMonitor(float min_temp_deg_c, float max_temp_deg_c)
 :min_temp_deg_c{min_temp_deg_c}, max_temp_deg_c{max_temp_deg_c}{}
 
-void PlatformTemperatureMonitor::runTemperatureMonitor()
+void PlatformTemperatureMonitor::runTemperatureMonitor() const
 {
     // Main loop to poll sensor temperatures
     while (true)
@@ -96,7 +96,7 @@ void PlatformTemperatureMonitor::set_polling_time_interval(uint32_t new_polling_
     polling_time_interval_ms = new_polling_time_interval_ms;
 }
 
-bool PlatformTemperatureMonitor::verify_temp_in_range(uint8_t sensor_id, float reported_temp_deg_c)
+bool PlatformTemperatureMonitor::verify_temp_in_range(uint8_t sensor_id, float reported_temp_deg_c) const
 {
     // Check if temperature is out of range of acceptable temperature values
     if (reported_temp_deg_c > max_temp_deg_c or reported_temp_deg_c < min_temp_deg_c)

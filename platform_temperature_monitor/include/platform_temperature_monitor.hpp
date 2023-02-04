@@ -48,7 +48,7 @@ public:
     /**
      * @brief Run the temperature monitor (blocking)
      */
-    void runTemperatureMonitor();
+    void runTemperatureMonitor() const;
 
     /**
      * @brief set the rate at which temperatures are read
@@ -70,7 +70,7 @@ public:
      * @param reported_temp_deg_c Reported temperature in celcius
      * @return true if temperature is in range, false otherwise 
      */
-    bool verify_temp_in_range(uint8_t sensor_id, float reported_temp_deg_c);
+    bool verify_temp_in_range(uint8_t sensor_id, float reported_temp_deg_c) const;
 
 protected:
     /**
@@ -96,7 +96,7 @@ protected:
     /**
      * Protects modifying the sensor IDs from within the main thread while polling
      */ 
-    std::mutex sensor_ids_mtx;
+    mutable std::mutex sensor_ids_mtx; // keyword mutable makes it legal to assign a value in a const member function (for locking)
 
 };
 } //namespace PTM
