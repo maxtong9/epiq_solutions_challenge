@@ -59,13 +59,13 @@ int32_t SPIInterface::spi_read_data_bits(uint32_t* data_word, uint32_t data_size
     if (data_size > constants::MAX_DATA_WORD_SIZE_BITS)
     {
         std::cerr << "Error: Data size > " << constants::MAX_DATA_WORD_SIZE_BITS << " bits" << std::endl;
-        return 1;
+        return 3;
     }
 
     if (chip_sel > constants::CS4_PIN or chip_sel < constants::CS1_PIN)
     {
         std::cerr << "Error: Invalid chip select pin to read from" << std::endl;
-        return 3;
+        return 1;
     }
 
     // Set the Chip Select for the device we want to read

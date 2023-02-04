@@ -41,7 +41,13 @@ int32_t Tmp125Driver::tmp125_read_temp(uint8_t temp_sensor_id, float *p_temp_in_
 
     uint32_t data_word = 0;
 
-    spi_interface->spi_read_data_bits(&data_word, constants::DATA_WORD_SIZE_BITS, temp_sensor_id + constants::CS_PIN_ID_OFFSET);
+    int32_t error_code = spi_interface->spi_read_data_bits(&data_word, constants::DATA_WORD_SIZE_BITS, temp_sensor_id + constants::CS_PIN_ID_OFFSET);
+
+    // Check for SPI read errors
+    if (error_code != 0)
+    {
+        return error_code; // NOTE: Error codes are not well defined. An improvement I would make is to define them better. For now the objective is to make them different
+    }
 
     // convert the bits in the data word to the temperature
     *p_temp_in_degrees_c = data_word_to_temperature(data_word);
